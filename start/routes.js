@@ -17,3 +17,16 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+
+
+// all api routes (for real endpoints make sure to use controllers)
+Route.get("hello", () => {
+  return { greeting: "Hello from the backend" };
+}).prefix("api")
+
+Route.post("post-example", () => {
+  return { greeting: "Nice post!" };
+}).prefix("api")
+
+// This has to be the last route
+Route.any('*', ({view}) =>  view.render('app'))

@@ -1,14 +1,16 @@
 let mix = require('laravel-mix');
-mix.pug = require('laravel-mix-pug');
-var path = require('path');
+
+if (mix.inProduction()) {
+  mix.version();
+}
 
 mix
 	// transpiling, babelling, minifying and creating the public/js/main.js out of our assets
-	.pug('resources/views/*.pug', path.relative('resources/views', 'public') , { pug: { pretty: true, debug: false } })
 	.js('resources/assets/js/main.js', 'public/js')
 	.sass('resources/assets/sass/app.sass', 'public/css')
 	// setting the public directory to public (this is where the mix-manifest.json gets created)
-	.setPublicPath('public');
+	.setPublicPath('public')
+  ;
 
 // aliases so instead of e.g. '../../components/test' we can import files like '@/components/test'
 mix.webpackConfig({
@@ -20,9 +22,6 @@ mix.webpackConfig({
 	}
 });
 
-if (mix.inProduction()) {
-	mix.version();
-}
 
 /*
  |--------------------------------------------------------------------------

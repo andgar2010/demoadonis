@@ -1,30 +1,28 @@
 let mix = require('laravel-mix');
+mix.pug = require('laravel-mix-pug');
+var path = require('path');
 
-// setting the public directory to public (this is where the mix-manifest.json gets created)
-mix.setPublicPath('public')
-// transpiling, babelling, minifying and creating the public/js/main.js out of our assets
-    .js('resources/assets/js/main.js', 'public/js')
-    .sass('resources/assets/sass/app.sass', 'public/css');
-
+mix
+	// transpiling, babelling, minifying and creating the public/js/main.js out of our assets
+	// .pug('resources/views/*.pug', '../../public', { pug: { pretty: true, debug: false } })
+	.js('resources/assets/js/main.js', 'public/js')
+	.sass('resources/assets/sass/app.sass', 'public/css')
+	// setting the public directory to public (this is where the mix-manifest.json gets created)
+	.setPublicPath('public');
 
 // aliases so instead of e.g. '../../components/test' we can import files like '@/components/test'
 mix.webpackConfig({
-  resolve: {
-      alias: {
-          "@": path.resolve(
-              __dirname,
-              "resources/assets/js"
-          ),
-          "@sass": path.resolve(
-              __dirname,
-              "resources/assets/sass"
-          ),
-      }
-  }
+	resolve: {
+		alias: {
+			'@': path.resolve(__dirname, 'resources/assets/js'),
+			'@sass': path.resolve(__dirname, 'resources/assets/sass')
+		}
+	}
 });
 
-
-mix.version();
+if (mix.inProduction()) {
+	mix.version();
+}
 
 /*
  |--------------------------------------------------------------------------
@@ -37,7 +35,7 @@ mix.version();
  |
  */
 
- // Full API
+// Full API
 // mix.js(src, output);
 // mix.react(src, output); <-- Identical to mix.js(), but registers React Babel compilation.
 // mix.preact(src, output); <-- Identical to mix.js(), but registers Preact compilation.

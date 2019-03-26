@@ -4,7 +4,7 @@ var path = require('path');
 
 mix
 	// transpiling, babelling, minifying and creating the public/js/main.js out of our assets
-	.pug('resources/views/*.pug', '../../public', { pug: { pretty: true, debug: false } })
+	.pug('resources/views/*.pug', path.relative('resources/views', 'public') , { pug: { pretty: true, debug: false } })
 	.js('resources/assets/js/main.js', 'public/js')
 	.sass('resources/assets/sass/app.sass', 'public/css')
 	// setting the public directory to public (this is where the mix-manifest.json gets created)
